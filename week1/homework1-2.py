@@ -22,6 +22,7 @@ new_dictionary = sorted(new_dictionary,key=lambda x:x[0]) #一番目の要素で
 def input_texts(file):
     f = open(file,"r")
     f = f.read().split("\n")
+    f.remove('')
 
     lists=[]
     for w in f:
@@ -50,12 +51,45 @@ def anagram_search(random_word,new_dictionary):
 
     return anagrams
 
-#出力
+
+#スコア計算 / 一番スコアの良い文字列の抽出
+def score_calc(anagrams):
+    SCORES = [1, 3, 2, 2, 1, 3, 3, 1, 1, 4, 4, 2, 2, 1, 1, 3, 4, 1, 1, 1, 2, 3, 3, 4, 3, 4] #得点表
+
+    ans = 0
+    max_anagram = "a"
+
+    for anagram in anagrams:
+        count = 0
+        score_counter=collections.Counter(anagram)
+
+        # SCORESに従って得点を付与
+        for i in range(97,123):
+            count+=score_counter[chr(i)]*SCORES[i-97]
+        
+        #得点の比較
+        ans = max(ans,count)
+
+        #最大スコアが更新されたときに文字列も更新する
+        if count == ans:
+            max_anagram = anagram
 
 
+    return ans,max_anagram
 
 
-a = input_texts("week1\small.txt")
+#テキストファイルに出力
 
+a = input_texts("week1\medium.txt")
+
+
+total=0
+for random_word in a:
+    anagrams=anagram_search(random_word,new_dictionary)
+    ans,max_anagram=score_calc(anagrams)
+
+    total+=ans
+    print(ans,max_anagram)
+print(total)
 
     
