@@ -1,3 +1,5 @@
+
+#単語の入力
 original_word = input("Input the word name : ")
 
 original_word = original_word.lower() #小文字に揃える
