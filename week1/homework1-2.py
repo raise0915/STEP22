@@ -5,14 +5,14 @@
 import collections
 # ------------ファイル指定------------
 # inputファイルの指定
-inputfile = "small.txt"
+INPUT_FILE = "small.txt"
 
 # 辞書ファイルの読み込み
-textfile = "week1\words.txt"
+TEXT_FILE = "week1\words.txt"
 # -----------------------------------
 
 
-f = open(textfile, "r")
+f = open(TEXT_FILE, "r")
 dictionary = f.read().split("\n")
 dictionary.remove('')  # 空白が一つ生まれるのでここで駆逐する
 f.close()
@@ -95,12 +95,12 @@ def output(outputname, anagrams):
 
 # ------------ここからメイン↓------------
 
-text = input_texts("week1/"+inputfile)
+text = input_texts("week1/"+INPUT_FILE)
 
-# outputファイル用にinputfileから名前を抽出する
+# outputファイル用にINPUT_FILEから名前を抽出する
 target = '.txt'
-idx = inputfile.find(target)
-outputname = inputfile[:idx]
+idx = INPUT_FILE.find(target)
+outputname = INPUT_FILE[:idx]
 
 anagrams = []
 

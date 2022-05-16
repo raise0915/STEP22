@@ -17,16 +17,16 @@ def input_check():
     input_flag = False
     # アルファベット判定・そうでなければ再度入力を促す
     while input_flag == False:
-        inputword = input("Input the word name : ")
-        if inputword.isalpha():
+        input_word = input("Input the word name : ")
+        if input_word.isalpha():
             input_flag = True
         else:
             print("Try Again")
 
 
-    original_word= inputword.strip().lower()  # 空白を除去・小文字に揃える
-    inputword = ''.join(sorted(original_word))  # ソートする
-    return inputword,original_word
+    original_word= input_word.strip().lower()  # 空白を除去・小文字に揃える
+    input_word = ''.join(sorted(original_word))  # ソートする
+    return input_word,original_word
 
 
 # 二分探索関数
@@ -70,9 +70,12 @@ else:
         center -= 1
 
     center = num + 1
-    while random_word == new_dictionary[center][1]:
-        anagrams.append(new_dictionary[center][1])
-        center += 1
+    try:
+        while random_word == new_dictionary[center][1]:
+            anagrams.append(new_dictionary[center][1])
+            center += 1
+    except:
+        pass
 
 # 結果の表示
 print("=== RESULT ===")
