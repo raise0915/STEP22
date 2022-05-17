@@ -2,15 +2,14 @@
 
 # 辞書ファイルの読み込み
 textfile = "week1\words.txt"
-f = open(textfile, "r")
-dictionary = f.read().split("\n")
-f.close()
+with open(textfile) as file:
+    dictionary = file.read().split("\n")
 
 #ソートされた新しい辞書の作成 / 元の辞書と紐づけ
 new_dictionary = []
-for w in dictionary:
-    new_dictionary.append([''.join(sorted(w)).strip(), w.strip()])
-new_dictionary = sorted(new_dictionary, key=lambda x: x[0])  # 一番目の要素でソートする
+new_dictionary.append([[''.join(sorted(w)).strip(), w.strip()]] for w in dictionary)
+# 一番目の要素でソートする
+new_dictionary = sorted(new_dictionary, key=lambda x: x[0])  
 
 #単語の入力
 def input_check():
