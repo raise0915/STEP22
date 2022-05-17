@@ -1,6 +1,7 @@
 # 行列計算 / グラフ作成プログラム
 # homework2-1.pyによる行列計算における計算時間についてのグラフが出力されます -> 時間はかかる
 # commandの部分をご自身の環境に合わせて書き換えてください
+
 import subprocess
 from matplotlib import pyplot as plt
 # どこまでの行列(NUMBER * NUMBER)を測定するか設定する
@@ -44,7 +45,7 @@ def main():
     # 0の分を初めに追加しておく
     results.append(0)
 
-    for i in range (NUMBER):
+    for i in range(NUMBER):
         results.append(float(find_calc(i)))
     draw_graph(results)
 
