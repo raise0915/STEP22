@@ -107,16 +107,25 @@ def tokenize(line):
   return tokens
 
 # かっこ内の計算
-def brakets_calc(tokens):
-  #小かっこ
-  start_index = tokens.index({'type': 'LAPAR'})
-  end_index = tokens.index({'type': 'RAPAR'})
-  calc_tokens = tokens[start_index+1 : end_index+1]
+def brakets_calc(tokens,brakets_type):
+
+  #小/中/大かっこについて考える
+  if brakets_type == "small":
+    start_index = tokens.index({'type': 'LAPAR'})
+    end_index = tokens.index({'type': 'RAPAR'})
+  if brakets_type =="medium":
+    start_index = tokens.index({'type': 'LBRACE'})
+    end_index = tokens.index({'type': 'RBRACE'})
+  if brakets_type =="large":
+    start_index = tokens.index({'type': 'LSQB'})
+    end_index = tokens.index({'type': 'RSQB'})
+
+  # かっこの中身だけ抽出する
+  calc_tokens = tokens[start_index+1 : end_index]
+ 
   brakets_answer = calculation(calc_tokens)
-  print(type(brakets_answer))
 
   calculated_tokens = []
-
   # かっこの計算後のtoken
   for i in range(len(tokens)):
     # かっこ内は計算済みなのでパス
@@ -132,6 +141,7 @@ def brakets_calc(tokens):
   return calculated_tokens
 
 
+# 計算部分
 # かけ算 / わり算の処理を行う -> その後残りの記号を足し算・引き算する
 def calculation(tokens):
   # かけ算とわり算の処理
@@ -177,7 +187,7 @@ def calculation(tokens):
         
         else:
           print('Invalid syntax')
-          exit(1)       
+          exit(1)
 
     index += 1
 
@@ -213,31 +223,58 @@ def calculation(tokens):
   return answer
 
 
-# 総合　-> かっこがつく場合かっこ内を先に計算するようにする
+# 計算まとめ　-> かっこがつく場合かっこ内を先に計算するようにする
+# 前提条件：大かっこが存在していれば中・小かっこが、中かっこが存在していれば小かっこが存在しているものとする
 def evaluate(tokens):
-  if ({'type': 'LAPAR'} in tokens):
-    tokens = brakets_calc(tokens)
-    print(tokens)
+  # 大かっこが存在する場合
+  if tokens.count({'type': 'LSQB'}) > 0:
+    for _ in range(tokens.count({'type': 'LAPAR'})):
+      tokens = brakets_calc(tokens,'small')
+    for _ in range(tokens.count({'type': 'LBRACE'})):
+      tokens = brakets_calc(tokens,'medium') 
+    for _ in range(tokens.count({'type': 'LSQB'})):
+      tokens = brakets_calc(tokens,'large')
     answer =calculation(tokens)
+
+  # 中かっこが存在する場合
+  elif tokens.count({'type': 'LBRACE'}) > 0:
+    for _ in range(tokens.count({'type': 'LAPAR'})):
+      tokens = brakets_calc(tokens,'small')
+    for _ in range(tokens.count({'type': 'LBRACE'})):
+      tokens = brakets_calc(tokens,'medium') 
+    answer =calculation(tokens)
+
+  # 小かっこが存在する場合
+  elif tokens.count({'type': 'LAPAR'}) > 0:
+    for _ in range(tokens.count({'type': 'LAPAR'})) :
+      tokens = brakets_calc(tokens,'small')
+    answer =calculation(tokens)
+
+  #かっこが存在しない場合
   else:
     answer =calculation(tokens)
   return answer
 
 
-
 def test(line):
   tokens = tokenize(line)
   actual_answer = evaluate(tokens)
-  expected_answer = eval(line)
-  if abs(actual_answer - expected_answer) < 1e-8:
-    print("PASS! (%s = %f)" % (line, expected_answer))
-  else:
-    print("FAIL! (%s should be %f but was %f)" % (line, expected_answer, actual_answer))
+  #eval関数は大かっこと中かっこに対応してないそうなので、大・中かっこがある場合は答えだけ出します
+  try:
+    expected_answer = eval(line)
+    if abs(actual_answer - expected_answer) < 1e-8:
+      print("PASS! (%s = %f)" % (line, expected_answer))
+    else:
+      print("FAIL! (%s should be %f but was %f)" % (line, expected_answer, actual_answer))
+  except:
+    print("EXCEPTION BRAKETS! (%s = %f)" % (line, actual_answer))
+    
 
 
 # Add more tests to this function :)
 def run_test():
   print("==== Test started! ====")
+  test("224*5")
   test("1+2*5")
   test("1+2")
   test("1.0+2.1-3")
@@ -248,6 +285,10 @@ def run_test():
   test("3*3*3*3*3")
   test("4/4/4/4/4")
   test("(2+5)*7")
+  test("(3+6)*(7+1)")
+  test("(3+5)*(2+4)*(1+7)")
+  test("{(8+2)*(6+5)+2}*5")
+  test("[{(8+2)*(6+5)+2}+{(8+2)*(6+5)+2}]*5")
   print("==== Test finished! ====\n")
 
 run_test()
