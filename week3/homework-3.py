@@ -1,5 +1,8 @@
 #! /usr/bin/python3
 
+from nbformat import current_nbformat
+
+
 def read_number(line, index):
   number = 0
   while index < len(line) and line[index].isdigit():
@@ -62,37 +65,53 @@ def tokenize(line):
 
 
 def evaluate(tokens):
-  tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
-  index = 0
-
   # まずはかけ算 / わり算の処理を行う -> その後残りの記号を足し算・引き算する
  
   # かけ算とわり算の処理
+  tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
+  index = 0
+  continuity = False #*と/が連続した時用
+  current_number = 0
   while index < len(tokens)-1:
     if tokens[index +1]['type'] == 'NUMBER':
 
-        # かけ算の記号であった場合
+        # 記号が「*」であった場合
         if tokens[index]['type'] == 'STAR':
-          tokens[index-1]['number'] *= tokens[index+1]['number']
+          if continuity:
+            tokens[current_number]['number']*= tokens[index+1]['number']
+          
+          else:
+            tokens[index-1]['number'] *= tokens[index+1]['number']
+            current_number = index-1
+            continuity = True
 
-        # わり算の記号であった場合
+        # 記号が「/」の記号であった場合
         elif tokens[index]['type'] == 'SLASH':
-        
-        # 0が後ろに来た場合は割れないのでエラーで返す
-          try:
-            tokens[index-1]['number'] /= tokens[index+1]['number']
-          except ZeroDivisionError:
-            print("Zero Division Error")
-            exit(1)
+          # /と*の記号が数字を飛ばして連続して存在するときは先頭の数字tokenで計算する
+          if continuity:
+            try:
+              tokens[current_number]['number']/= tokens[index+1]['number']
+            except ZeroDivisionError:
+              print("Zero Division Error")
+              exit(1)            
+          else:
+            try:
+              tokens[index-1]['number'] /= tokens[index+1]['number']
+              current_number = index-1
+              continuity = True
+            # 0が後ろに来た場合は割れないのでエラーで返す
+            except ZeroDivisionError:
+              print("Zero Division Error")
+              exit(1)
 
-        # 足し算と引き算の記号はここでは無視
+        # +と-はここでは無視
         elif tokens[index]['type'] == 'PLUS' or tokens[index]['type']== 'MINUS':
-          pass
+          continuity = False
         
         else:
           print('Invalid syntax')
           exit(1)       
-      
+
     index += 1
 
 
@@ -144,6 +163,11 @@ def run_test():
   test("1+2")
   test("1.0+2.1-3")
   test("1/2+5")
+  # test("3/0+7") -> Zero Division Error判定
+  test("6.5/3+2*9.5+4.00")
+  test("2+2*2/2-2")
+  test("3*3*3*3*3")
+  test("4/4/4/4/4")
   print("==== Test finished! ====\n")
 
 run_test()
