@@ -1,7 +1,5 @@
 #! /usr/bin/python3
-
-from nbformat import current_nbformat
-
+from collections import Counter
 
 def read_number(line, index):
   number = 0
@@ -26,6 +24,33 @@ def read_star(line,index):
 #割り算の追加
 def read_slash(line,index):
   token = {'type': 'SLASH'}
+  return token, index + 1
+
+# 小かっこ
+def read_lpar(line,index):
+  token = {'type': 'LAPAR'}
+  return token, index + 1
+
+def read_rapar(line,index):
+  token = {'type': 'RAPAR'}
+  return token, index + 1
+
+#中かっこ
+def read_lbrace(line,index):
+  token = {'type': 'LBRACE'}
+  return token, index + 1
+
+def read_rbrace(line,index):
+  token = {'type': 'RBRACE'}
+  return token, index + 1
+
+#大かっこ
+def read_lsqb(line,index):
+  token = {'type': 'LSQB'}
+  return token, index + 1
+
+def read_rsqb(line,index):
+  token = {'type': 'RSQB'}
   return token, index + 1
 
 
@@ -55,7 +80,25 @@ def tokenize(line):
     elif line[index] == '*':
       (token,index) = read_star(line,index)
     elif line[index] == '/':
-      (token, index) = read_slash(line, index)    
+      (token, index) = read_slash(line, index)  
+
+    # 小かっこ
+    elif line[index] == '(':
+      (token,index) = read_lpar(line,index)
+    elif line[index] == ')':
+      (token,index) = read_rapar(line,index)
+
+    #中かっこ
+    elif line[index] == '{':
+      (token,index) = read_lbrace(line,index)
+    elif line[index] == '}':
+      (token,index) = read_rbrace(line,index)
+
+    #大かっこ
+    elif line[index] == '[':
+      (token,index) = read_lsqb(line,index)
+    elif line[index] == ']':
+      (token,index) = read_rsqb(line,index)
        
     else:
       print('Invalid character found: ' + line[index])
@@ -63,10 +106,34 @@ def tokenize(line):
     tokens.append(token)
   return tokens
 
+# かっこ内の計算
+def brakets_calc(tokens):
+  #小かっこ
+  start_index = tokens.index({'type': 'LAPAR'})
+  end_index = tokens.index({'type': 'RAPAR'})
+  calc_tokens = tokens[start_index+1 : end_index+1]
+  brakets_answer = calculation(calc_tokens)
+  print(type(brakets_answer))
 
-def evaluate(tokens):
-  # まずはかけ算 / わり算の処理を行う -> その後残りの記号を足し算・引き算する
- 
+  calculated_tokens = []
+
+  # かっこの計算後のtoken
+  for i in range(len(tokens)):
+    # かっこ内は計算済みなのでパス
+    if i >= start_index and i < end_index:
+      continue
+    # 右かっこ「)」まで終わったら計算結果を新しいtokenに追加
+    if i == end_index:
+      calculated_tokens.append({'type': 'NUMBER','number':brakets_answer})
+    # かっこの部分以外はそのまま
+    else:
+      calculated_tokens.append(tokens[i])
+
+  return calculated_tokens
+
+
+# かけ算 / わり算の処理を行う -> その後残りの記号を足し算・引き算する
+def calculation(tokens):
   # かけ算とわり算の処理
   tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
   index = 0
@@ -146,6 +213,18 @@ def evaluate(tokens):
   return answer
 
 
+# 総合　-> かっこがつく場合かっこ内を先に計算するようにする
+def evaluate(tokens):
+  if ({'type': 'LAPAR'} in tokens):
+    tokens = brakets_calc(tokens)
+    print(tokens)
+    answer =calculation(tokens)
+  else:
+    answer =calculation(tokens)
+  return answer
+
+
+
 def test(line):
   tokens = tokenize(line)
   actual_answer = evaluate(tokens)
@@ -168,6 +247,7 @@ def run_test():
   test("2+2*2/2-2")
   test("3*3*3*3*3")
   test("4/4/4/4/4")
+  test("(2+5)*7")
   print("==== Test finished! ====\n")
 
 run_test()
