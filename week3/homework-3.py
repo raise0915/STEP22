@@ -1,6 +1,4 @@
 #! /usr/bin/python3
-from collections import Counter
-
 def read_number(line, index):
   number = 0
   while index < len(line) and line[index].isdigit():
