@@ -105,23 +105,23 @@ def tokenize(line):
   return tokens
 
 # かっこ内の計算
-def brakets_calc(tokens,brakets_type):
+def caluculate_brackets(tokens,brackets_type):
 
   #小/中/大かっこについて考える
-  if brakets_type == "small":
+  if brackets_type == "small":
     start_index = tokens.index({'type': 'LAPAR'})
     end_index = tokens.index({'type': 'RAPAR'})
-  if brakets_type =="medium":
+  if brackets_type =="medium":
     start_index = tokens.index({'type': 'LBRACE'})
     end_index = tokens.index({'type': 'RBRACE'})
-  if brakets_type =="large":
+  if brackets_type =="large":
     start_index = tokens.index({'type': 'LSQB'})
     end_index = tokens.index({'type': 'RSQB'})
 
   # かっこの中身だけ抽出する
   calc_tokens = tokens[start_index+1 : end_index]
  
-  brakets_answer = calculation(calc_tokens)
+  brackets_answer = calculate_as(calculate_td(calc_tokens))
 
   calculated_tokens = []
   # かっこの計算後のtoken
@@ -131,7 +131,7 @@ def brakets_calc(tokens,brakets_type):
       continue
     # 右かっこ「)」まで終わったら計算結果を新しいtokenに追加
     if i == end_index:
-      calculated_tokens.append({'type': 'NUMBER','number':brakets_answer})
+      calculated_tokens.append({'type': 'NUMBER','number':brackets_answer})
     # かっこの部分以外はそのまま
     else:
       calculated_tokens.append(tokens[i])
@@ -141,29 +141,29 @@ def brakets_calc(tokens,brakets_type):
 
 # 計算部分
 # かけ算 / わり算の処理を行う -> その後残りの記号を足し算・引き算する
-def calculation(tokens):
+def calculate_td(tokens):
   # かけ算とわり算の処理
   tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
   index = 0
-  continuity = False #*と/が連続した時用
+  has_continuity = False #*と/が連続した時用
   current_number = 0
   while index < len(tokens)-1:
     if tokens[index +1]['type'] == 'NUMBER':
 
         # 記号が「*」であった場合
         if tokens[index]['type'] == 'STAR':
-          if continuity:
+          if has_continuity:
             tokens[current_number]['number']*= tokens[index+1]['number']
           
           else:
             tokens[index-1]['number'] *= tokens[index+1]['number']
             current_number = index-1
-            continuity = True
+            has_continuity = True
 
         # 記号が「/」の記号であった場合
         elif tokens[index]['type'] == 'SLASH':
           # /と*の記号が数字を飛ばして連続して存在するときは先頭の数字tokenで計算する
-          if continuity:
+          if has_continuity:
             try:
               tokens[current_number]['number']/= tokens[index+1]['number']
             except ZeroDivisionError:
@@ -173,7 +173,7 @@ def calculation(tokens):
             try:
               tokens[index-1]['number'] /= tokens[index+1]['number']
               current_number = index-1
-              continuity = True
+              has_continuity = True
             # 0が後ろに来た場合は割れないのでエラーで返す
             except ZeroDivisionError:
               print("Zero Division Error")
@@ -181,11 +181,10 @@ def calculation(tokens):
 
         # +と-はここでは無視
         elif tokens[index]['type'] == 'PLUS' or tokens[index]['type']== 'MINUS':
-          continuity = False
+          has_continuity = False
         
         else:
-          print('Invalid syntax')
-          exit(1)
+          raise Exception('Invalid syntax')
 
     index += 1
 
@@ -202,17 +201,19 @@ def calculation(tokens):
       # *と/の場合は記号と後半の数字は無視する
       if tokens[i-1]['type'] =='STAR' or tokens[i-1]['type'] =='SLASH':
         continue
-    
+  return new_tokens
+  
   # 足し算と引き算 (サンプルそのまま)
+def calculate_as(tokens):
   answer = 0
-  new_tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
+  tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
   index = 1
-  while index < len(new_tokens):
-    if new_tokens[index]['type'] == 'NUMBER':
-      if new_tokens[index - 1]['type'] == 'PLUS':
-        answer += new_tokens[index]['number']
-      elif new_tokens[index - 1]['type'] == 'MINUS':
-        answer -= new_tokens[index]['number']
+  while index < len(tokens):
+    if tokens[index]['type'] == 'NUMBER':
+      if tokens[index - 1]['type'] == 'PLUS':
+        answer += tokens[index]['number']
+      elif tokens[index - 1]['type'] == 'MINUS':
+        answer -= tokens[index]['number']
       else:
         print('Invalid syntax')
         exit(1)
@@ -224,33 +225,27 @@ def calculation(tokens):
 # 計算まとめ　-> かっこがつく場合かっこ内を先に計算するようにする
 # 前提条件：大かっこが存在していれば中・小かっこが、中かっこが存在していれば小かっこが存在しているものとする
 def evaluate(tokens):
-  # 大かっこが存在する場合
-  if tokens.count({'type': 'LSQB'}) > 0:
-    for _ in range(tokens.count({'type': 'LAPAR'})):
-      tokens = brakets_calc(tokens,'small')
-    for _ in range(tokens.count({'type': 'LBRACE'})):
-      tokens = brakets_calc(tokens,'medium') 
-    for _ in range(tokens.count({'type': 'LSQB'})):
-      tokens = brakets_calc(tokens,'large')
-    answer =calculation(tokens)
+  # 小かっこが存在する場合
+  if tokens.count({'type': 'LAPAR'}) > 0:
+    for _ in range(tokens.count({'type': 'LAPAR'})) :
+      tokens = caluculate_brackets(tokens,'small')
 
   # 中かっこが存在する場合
-  elif tokens.count({'type': 'LBRACE'}) > 0:
-    for _ in range(tokens.count({'type': 'LAPAR'})):
-      tokens = brakets_calc(tokens,'small')
+  if tokens.count({'type': 'LBRACE'}) > 0:
     for _ in range(tokens.count({'type': 'LBRACE'})):
-      tokens = brakets_calc(tokens,'medium') 
-    answer =calculation(tokens)
+      tokens = caluculate_brackets(tokens,'medium') 
 
-  # 小かっこが存在する場合
-  elif tokens.count({'type': 'LAPAR'}) > 0:
-    for _ in range(tokens.count({'type': 'LAPAR'})) :
-      tokens = brakets_calc(tokens,'small')
-    answer =calculation(tokens)
+  # 大かっこが存在する場合
+  if tokens.count({'type': 'LSQB'}) > 0:
+    for _ in range(tokens.count({'type': 'LSQB'})):
+      tokens = caluculate_brackets(tokens,'large')
 
   #かっこが存在しない場合
   else:
-    answer =calculation(tokens)
+    pass
+
+  answer = calculate_as(calculate_td(tokens))
+
   return answer
 
 
@@ -265,7 +260,7 @@ def test(line):
     else:
       print("FAIL! (%s should be %f but was %f)" % (line, expected_answer, actual_answer))
   except:
-    print("EXCEPTION BRAKETS! (%s = %f)" % (line, actual_answer))
+    print("EXCEPTION bracketS! (%s = %f)" % (line, actual_answer))
     
 
 
