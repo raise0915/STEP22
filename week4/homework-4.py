@@ -7,7 +7,6 @@ def dfs(start_idx,target_idx,links,check):
   # stack
   container = collections.deque()
   container.append(start_idx)
-  print(container)
 
   # containerの中身が存在しなくなるまで探索を続ける
   while container:
@@ -23,12 +22,14 @@ def dfs(start_idx,target_idx,links,check):
     if v == target_idx:
       return True
 
-    # 次のリンクを取得・再帰で探索
-    for link in links:
-      if check[link]:
-        continue
-      else:
-        container.append(link)
+    else:
+      # 次のリンクを取得・再帰で探索
+      for link in links[v]:
+        try:
+          if not check[link]:
+            container.append(link)
+        except:
+          continue
 
   # ルートが見つからない場合はFalseを返す
   return False
@@ -53,16 +54,20 @@ def bfs(start_idx,target_idx,links,check):
     if v == target_idx:
       return True
 
-    for link in links:
-      if check[link]:
-        continue
-      else:
-        container.append(link)
+    else:
+      # 次のリンクを取得・再帰で探索
+      for link in links[v]:
+        try:
+          if not check[link]:
+            container.append(link)
+        except:
+          continue
+
   # ルートが見つからない場合はFalseを返す
   return False
 
 #small version か normal version か選択する
-def version_check():  
+def version_check(ENVIRONMENT='week4/data'):  
     pages = {}
     links = {}
     while True:
@@ -104,6 +109,8 @@ def version_check():
 def main():
   ENVIRONMENT = input("Type your directory for「data」file : ")
   pages,links,check = version_check(ENVIRONMENT)
+
+  q = int(input("Choose the solution, DFS(1) or BFS(2) : "))
   
   while True:
     # 開始とターゲットの単語を入力する
@@ -117,26 +124,31 @@ def main():
         target_idx = k
         print(target_value, k)
 
-    print(links[start_idx])
-
-    try:
-      ans = dfs(start_idx,target_idx,links,check)
+    # startとtagetが一緒であればTrueを返して終わり
+    if start_idx == target_idx:
+      ans = True
       break
-    except UnboundLocalError:
-      print("Words are not found. Try again")
-  
-  
-  
+
+    if q==1:
+      try:
+        ans = dfs(start_idx,target_idx,links,check)
+        break
+      except UnboundLocalError:
+        print("Words are not found. Try again")
+
+    if q==2:
+      try:
+        ans = bfs(start_idx,target_idx,links,check)
+        break
+      except UnboundLocalError:
+        print("Words are not found. Try again")
+
+    
   # ansによる探索結果の出力
   if ans:
-    print('Found')
+    print('Found!')
   else:
     print('Not Found')
-
-
-  
-
-
 
 if __name__ == '__main__':
   main()
