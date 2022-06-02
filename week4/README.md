@@ -24,6 +24,8 @@ DFSとやり方は似ていますが、stuckではなくqueを用いています
 # コードについて
 
 ## コードの配置
+[wikipedia_data.zip]("https://drive.google.com/file/d/1zqtjSb-ZoR4rzVUWZrjNSES5GKJhYmmH/view") をダウンロードして解凍し、以下のようなディレクトリ構成にしてください。
+
 your favorite directory<br>
 (好きなところにおいてください<br>
 ├── data<br>
