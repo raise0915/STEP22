@@ -23,16 +23,21 @@ def dfs(start_idx,target_idx,links,check):
       return True
 
     else:
-      # 次のリンクを取得・再帰で探索
-      for link in links[v]:
-        try:
-          if not check[link]:
-            container.append(link)
-        except:
-          continue
+      try:
+        # 次のリンクを取得
+        for link in links[v]:
+            if not check[link]:
+              container.append(link)
+
+      except:
+        continue
 
   # ルートが見つからない場合はFalseを返す
   return False
+
+# 深さ優先探索のパスを探す
+def search_path():
+  pass
 
 # 幅優先探索
 def bfs(start_idx,target_idx,links,check):
@@ -55,19 +60,19 @@ def bfs(start_idx,target_idx,links,check):
       return True
 
     else:
-      # 次のリンクを取得・再帰で探索
-      for link in links[v]:
-        try:
-          if not check[link]:
-            container.append(link)
-        except:
-          continue
+      try:
+        # 次のリンクを取得・再帰で探索
+        for link in links[v]:
+            if not check[link]:
+              container.append(link)
+      except:
+        continue
 
   # ルートが見つからない場合はFalseを返す
   return False
 
 #small version か normal version か選択する
-def version_check(ENVIRONMENT='week4/data'):  
+def check_vesion(ENVIRONMENT='week4/data'):  
     pages = {}
     links = {}
     while True:
@@ -107,8 +112,9 @@ def version_check(ENVIRONMENT='week4/data'):
     return pages,links,check
 
 def main():
+  # dataまでのパスを入力する
   ENVIRONMENT = input("Type your directory for「data」file : ")
-  pages,links,check = version_check(ENVIRONMENT)
+  pages,links,check = check_vesion(ENVIRONMENT)
 
   q = int(input("Choose the solution, DFS(1) or BFS(2) : "))
   
@@ -118,11 +124,9 @@ def main():
 
     for k, v in pages.items():
       if v == start_value:
-        print(start_value, k)
         start_idx = k
       if v == target_value:
         target_idx = k
-        print(target_value, k)
 
     # startとtagetが一緒であればTrueを返して終わり
     if start_idx == target_idx:
@@ -145,8 +149,11 @@ def main():
 
     
   # ansによる探索結果の出力
+  print('Start : {}, Target : {}'.format(pages[start_idx],pages[target_idx]))
   if ans:
     print('Found!')
+
+    print('Shortest path is {}'.format())
   else:
     print('Not Found')
 
