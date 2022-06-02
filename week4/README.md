@@ -10,11 +10,15 @@
 スタックを用いて探索しました。
 再帰を用いたら早いんだろうなと思いつつぐるぐるしすぎてエラーを吐いたので、おとなしく愚直にやっています<br>
 探索順序は以下のようになります。<br>
-
-
+<img width="300" alt="qiita-square" src="https://user-images.githubusercontent.com/63898148/171523138-93f95a7f-de8f-453b-937e-3a421c5953ba.png">
+<br>
 
 ## 幅優先探索(BFS)
-DFSとやり方は似ていますが、stuckではなくqueを用いています
+DFSとやり方は似ていますが、stuckではなくqueを用いています。<br>
+探索順序は以下のようになります。
+<br>
+
+<img width="300" alt="qiita-square" src="https://user-images.githubusercontent.com/63898148/171523134-f8f332c4-d704-4360-bf1c-2f37b47197df.png">
 
 
 # コードについて
