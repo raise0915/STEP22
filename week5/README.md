@@ -38,11 +38,8 @@ TSP(Traveling Salesman Problem ;巡回セールスマン問題)は、あるも�
 $ P = exp(-ΔE)/T $
 
 ## フローチャート
-というわけでこの2つを組み合わせるとこんな感じになります。
+というわけでこの2つを組み合わせるとこんな感じになります。2optを一巡やるごとに冷却させています
 <img width="300" alt="qiita-square" src="https://user-images.githubusercontent.com/63898148/172624023-248fe36d-b604-4458-9000-60c4d259da31.png">
-
-
-# プログラムの実行方法
 
 # 結果
 以下のようになりました。(outputが自分で実装したプログラムの結果です)<br>
