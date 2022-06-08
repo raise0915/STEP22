@@ -14,52 +14,45 @@ def distance(city1,city2):
 def two_opt(cities):
     points_number = len(cities) # 全部で何点あるか調べる
     new_cities = copy.deepcopy(cities)
-    count_nochange = 0 #変更なしの回数
 
-    while True:
-        # ランダムに異なる2点をpick up / つながっている点も取得
-        number_1 = random.randint(0,points_number-1)
-        number_2 = number_1
+    #Simulated Annealingのための変数
+    T_max = 10000 #最高温度
+    T_min = 0.1 #最低温度
+    T = T_max #現在の温度   
+    COOL = 0.98 # 温度冷却
 
-        # number_2はnumber_1と違うものにする
-        while number_2 == number_1:
-            number_2 = random.randint(0,points_number-1)
+    while T > T_min:
+        # 2点をpick up / つながっている点も取得
+        for index1 in range(points_number-2):                
+            index2 = index1 +1
+            for index3 in range(index1+2,points_number):
 
-        city1 = new_cities[random.randint(0,points_number-1)]
+                # 一番最後を引いた場合は最初につながるようにする
+                if index3 == points_number-1:
+                    index4 = 0
+                else:
+                    index4 = index3 +1
 
-        # 一番最後を引いた場合は最初につながるようにする
-        if number_1 == points_number-1:
-            city2 = new_cities[0]
-            index1 = 0
-        else:
-            city2 = new_cities[number_1+1]
-            index1 = number_1+1
+                city1 = new_cities[index1]  
+                city2 = new_cities[index2]
+                city3 = new_cities[index3]  
+                city4 = new_cities[index4]        
+                
+                # それぞれの距離を取得
+                pre_length = distance(city1,city2) + distance(city3,city4)
+                new_length = distance(city1,city3) + distance(city2,city4)
 
-        city3 = new_cities[number_2]
-        if number_2 == points_number-1:
-            city4 = new_cities[0]
-        else:
-            city4 = new_cities[number_2+1]
-        
-        # それぞれの距離を取得
-        length_old1 = distance(city1,city2)
-        length_old2 = distance(city3,city4)
-        length_new1 = distance(city1,city3)
-        length_new2 = distance(city2,city4)
+                    # 遷移確率関数
+                prob = np.exp(-(np.abs(pre_length - new_length))/T)
 
-        # 今の組み合わせよりランダムで選ばれた新しい組み合わせがあればそれに更新する
-        if length_new1+length_new2 < length_old1+length_old2:
-                new_cities[index1] = city3
-                new_cities[number_2] = city2
-                count_nochange = 0
+                # 今の組み合わせがより短い or 確率的に次の解へ移動
+                if pre_length > new_length or random.random() < prob:
+                    new_cities[index2] = city3
+                    new_cities[index3] = city2
 
-        else:
-            count_nochange +=1
-        
-        # 一定回数以上変更がなければ操作終了
-        if count_nochange >= 30:
-            break
+        T*= COOL #温度冷却
     
+
     # new_citiesと元のcitiesから順番を照らし合わせて出力
     result = []
     for i in range(points_number):
