@@ -19,7 +19,7 @@ def two_opt(cities):
     T_max = 10000 #最高温度
     T_min = 0.1 #最低温度
     T = T_max #現在の温度   
-    COOL = 0.98 # 温度冷却
+    COOL = 0.995 # 冷却率 -> 1に近づくほど良い
 
     while T > T_min:
         # 2点をpick up / つながっている点も取得
