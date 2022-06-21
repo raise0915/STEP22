@@ -1,0 +1,288 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# ����̓t���[�\�t�g�E�F�A�ł�. ���p�����ɂ��Ă̓\�[�X��
+# ������������.
+# ���Ɛ������̖ړI�ւ̓K�����̔@���Ɋւ�炸, ���ۏ؂ł�.
+
+# This program built for i386-pc-mingw32
+ 
+
+# Make �f�[�^�x�[�X�o�� Tue Jun 21 17:30:30 2022
+
+# �ϐ�
+
+# �����ϐ�
+<D = $(patsubst %/,%,$(dir $<))
+# �����ϐ�
+?F = $(notdir $?)
+# ���ϐ�
+CUDA_PATH_V11_6 = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6
+# makefile �ϐ�
+MAKEFLAGS = Rrqp
+# ���ϐ�
+VSCODE_LOG_NATIVE = false
+# �����ϐ�
+?D = $(patsubst %/,%,$(dir $?))
+# �����ϐ�
+@D = $(patsubst %/,%,$(dir $@))
+# ���ϐ�
+HOMEDRIVE = C:
+# �����ϐ�
+@F = $(notdir $@)
+# �����ϐ�
+^D = $(patsubst %/,%,$(dir $^))
+# makefile �ϐ�
+CURDIR := c:/Users/yuri1/STEP22
+# �f�t�H���g
+SHELL := sh.exe
+# ���ϐ�
+WINDIR = C:\WINDOWS
+# ���ϐ�
+VSCODE_NLS_CONFIG = {"locale":"ja","availableLanguages":{"*":"ja"},"_languagePackId":"3cd3bd15e30fa0124a3f232cbca66525.ja","_translationsConfigFile":"C:\\Users\\yuri1\\AppData\\Roaming\\Code\\clp\\3cd3bd15e30fa0124a3f232cbca66525.ja\\tcf.json","_cacheRoot":"C:\\Users\\yuri1\\AppData\\Roaming\\Code\\clp\\3cd3bd15e30fa0124a3f232cbca66525.ja","_resolvedLanguagePackCoreLocation":"C:\\Users\\yuri1\\AppData\\Roaming\\Code\\clp\\3cd3bd15e30fa0124a3f232cbca66525.ja\\30d9c6cd9483b2cc586687151bcbcd635f373630","_corruptedFile":"C:\\Users\\yuri1\\AppData\\Roaming\\Code\\clp\\3cd3bd15e30fa0124a3f232cbca66525.ja\\corrupted.info","_languagePackSupport":true}
+# ���ϐ�
+ONEDRIVE = C:\Users\yuri1\OneDrive
+# ���ϐ�
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# makefile �ϐ�
+MAKEFILE_LIST := 
+# ���ϐ�
+TMP = C:\Users\yuri1\AppData\Local\Temp
+# ���ϐ�
+VSCODE_VERBOSE_LOGGING = true
+# ���ϐ�
+PROGRAMW6432 = C:\Program Files
+# ���ϐ�
+PROGRAMDATA = C:\ProgramData
+# ���ϐ�
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-6cd099e8-9054-4ebc-9b5b-71297d88df96-sock
+# ���ϐ�
+VSCODE_CWD = C:\Users\yuri1\AppData\Local\Programs\Microsoft VS Code
+# ���ϐ�
+PATH = C:\Program Files (x86)\GnuWin32\bin;C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;C:\Users\yuri1\anaconda3;C:\Users\yuri1\anaconda3\Library\mingw-w64\bin;C:\Users\yuri1\anaconda3\Library\usr\bin;C:\Users\yuri1\anaconda3\Library\bin;C:\Users\yuri1\anaconda3\Scripts;C:\Users\yuri1\AppData\Local\Microsoft\WindowsApps;C:\Users\yuri1\AppData\Local\Programs\EmEditor;C:\Users\yuri1\AppData\Local\Programs\Microsoft VS Code\bin;C:\LANL\
+# ���ϐ�
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# ���ϐ�
+PROCESSOR_ARCHITECTURE = x86
+# ���ϐ�
+USERPROFILE = C:\Users\yuri1
+# ���ϐ�
+ALLUSERSPROFILE = C:\ProgramData
+# ���ϐ�
+VSCODE_LOG_STACK = false
+# ���ϐ�
+NUMBER_OF_PROCESSORS = 8
+# ���ϐ�
+ELECTRON_RUN_AS_NODE = 1
+# �f�t�H���g
+.FEATURES := target-specific order-only second-expansion else-if archives
+# ���ϐ�
+NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
+# �����ϐ�
+%F = $(notdir $%)
+# ���ϐ�
+GCCPATH = C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin
+# ���ϐ�
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_14400_YZGTETIVQQXXOYCL
+# ���ϐ�
+VSCODE_PIPE_LOGGING = true
+# ���ϐ�
+COMPUTERNAME = DESKTOP-CHA4ATG
+# ���ϐ�
+PROGRAMFILES = C:\Program Files (x86)
+# ���ϐ�
+PARMILADIR = C:\LANL\
+# ���ϐ�
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# ���ϐ�
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# ���ϐ�
+USERNAME = yuri1
+# ���ϐ�
+PUBLIC = C:\Users\Public
+# ���ϐ�
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# ���ϐ�
+VSCODE_CODE_CACHE_PATH = C:\Users\yuri1\AppData\Roaming\Code\CachedData\30d9c6cd9483b2cc586687151bcbcd635f373630
+# ���ϐ�
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# ���ϐ�
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# ���ϐ�
+LOGONSERVER = \\DESKTOP-CHA4ATG
+# ���ϐ�
+ONEDRIVECONSUMER = C:\Users\yuri1\OneDrive
+# ���ϐ�
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# ���ϐ�
+USERDOMAIN = DESKTOP-CHA4ATG
+# �f�t�H���g
+MAKE = $(MAKE_COMMAND)
+# �f�t�H���g
+MAKECMDGOALS := all
+# �f�t�H���g
+MAKE_VERSION := 3.81
+# makefile �ϐ�
+.DEFAULT_GOAL := 
+# ���ϐ�
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# �����ϐ�
+%D = $(patsubst %/,%,$(dir $%))
+# ���ϐ�
+LOCALAPPDATA = C:\Users\yuri1\AppData\Local
+# ���ϐ�
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+# �f�t�H���g
+MAKE_COMMAND := make.exe
+# ���ϐ�
+PROCESSOR_ARCHITEW6432 = AMD64
+# �f�t�H���g
+.VARIABLES := 
+# �����ϐ�
+*F = $(notdir $*)
+# ���ϐ�
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 126 Stepping 5, GenuineIntel
+# ���ϐ�
+OS = Windows_NT
+# ���ϐ�
+VSCODE_IPC_HOOK = \\.\pipe\e74b6e806c917ae53420fd5130307cc5-1.68.1-main-sock
+# ���ϐ�
+HOMEPATH = \Users\yuri1
+# ���ϐ�
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# ���ϐ�
+PROMPT = $P$G
+# ���ϐ�
+MFLAGS = -Rrqp
+# �����ϐ�
+*D = $(patsubst %/,%,$(dir $*))
+# ���ϐ�
+SYSTEMROOT = C:\WINDOWS
+# �����ϐ�
++D = $(patsubst %/,%,$(dir $+))
+# �����ϐ�
++F = $(notdir $+)
+# ���ϐ�
+APPDATA = C:\Users\yuri1\AppData\Roaming
+# ���ϐ�
+TEMP = C:\Users\yuri1\AppData\Local\Temp
+# ���ϐ�
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# �f�t�H���g
+MAKEFILES := 
+# �����ϐ�
+<F = $(notdir $<)
+# ���ϐ�
+LC_ALL = C
+# �����ϐ�
+^F = $(notdir $^)
+# ���ϐ�
+CUDA_PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6
+# �f�t�H���g
+SUFFIXES := 
+# ���ϐ�
+SYSTEMDRIVE = C:
+# ���ϐ�
+SESSIONNAME = Console
+# ���ϐ�
+PROCESSOR_REVISION = 7e05
+# ���ϐ�
+MAKELEVEL := 0
+# ���ϐ�
+LANG = C
+# ���ϐ�
+PROCESSOR_LEVEL = 6
+# ���ϐ�
+VSCODE_PID = 14400
+# ���ϐ�
+USERDOMAIN_ROAMINGPROFILE = DESKTOP-CHA4ATG
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=92/1024=9%, Rehash=0, Collisions=9/109=8%
+
+# Pattern-specific Variable Values
+
+# �p�^�[���w��ϐ��̒l�Ȃ�.
+
+# �f�B���N�g��
+
+# C:\Users\yuri1\anaconda3\Library\usr\bin: ��Ԃ𒲂ׂ��܂���ł���.
+# C:\Users\yuri1\AppData\Local\Microsoft\WindowsApps (key C:/Users/yuri1/AppData/Local/Microsoft/WindowsApps, mtime 1655813554): 19 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# . (key c:/Users/yuri1/STEP22, mtime 1655734642): 13 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\yuri1\anaconda3\Library\bin (key C:/Users/yuri1/anaconda3/Library/bin, mtime 1635215030): 442 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\LANL\ (key C:/LANL/, mtime 1646117457): 20 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\yuri1\anaconda3\Scripts (key C:/Users/yuri1/anaconda3/Scripts, mtime 1636444777): 350 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\yuri1\anaconda3\Library\mingw-w64\bin (key C:/Users/yuri1/anaconda3/Library/mingw-w64/bin, mtime 1622630670): 15 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin (key C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin, mtime 16231 
+29139): 58 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\yuri1\AppData\Local\Programs\EmEditor (key C:/Users/yuri1/AppData/Local/Programs/EmEditor, mtime 1622633395): 56 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\yuri1\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/yuri1/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1655317118): 4 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Users\yuri1\anaconda3 (key C:/Users/yuri1/anaconda3, mtime 1655656741): 89 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files (x86)\GnuWin32\bin (key C:/Program Files (x86)/GnuWin32/bin, mtime 1655827986): 5 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+
+# 1071 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C���� (12 �̃f�B���N�g����).
+
+# �Öك��[��
+
+# �Öك��[���Ȃ�.
+
+# �t�@�C��
+
+# �^�[�Q�b�g�ł͂���܂���:
+all:
+#  �R�}���h���C���^�[�Q�b�g.
+#  �Öك��[���̒T�����s���܂���.
+#  �t�@�C�������݂��܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# �^�[�Q�b�g�ł͂���܂���:
+.DEFAULT:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+
+# �^�[�Q�b�g�ł͂���܂���:
+makefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  �Öك��[���̒T�����s���܂���.
+#  �t�@�C�������݂��܂���.
+#  �t�@�C���͍X�V����Ă��܂�.
+#  �X�V�Ɏ��s���܂���.
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# �^�[�Q�b�g�ł͂���܂���:
+.SUFFIXES:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+
+# �^�[�Q�b�g�ł͂���܂���:
+GNUmakefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  �Öك��[���̒T�����s���܂���.
+#  �t�@�C�������݂��܂���.
+#  �t�@�C���͍X�V����Ă��܂�.
+#  �X�V�Ɏ��s���܂���.
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# �t�@�C���n�b�V���e�[�u���̏��:
+# Load=5/1024=0%, Rehash=0, Collisions=0/16=0%
+# VPATH �T���p�X
+
+# `vpath' �T���p�X�͂���܂���
+
+# ��ʂ� (`VPATH' �ϐ�) �T���p�X�Ȃ�.
+
+# # of strings in strcache: 0
+# # of strcache buffers: 0
+# strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
+# strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
+
+# Make �f�[�^�x�[�X�I�� Tue Jun 21 17:30:30 2022
+
+ 
+make.exe: *** �^�[�Q�b�g `all' �� make ���郋�[��������܂���.  ���~.
+
