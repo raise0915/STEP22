@@ -2,3 +2,7 @@
 *.txt
 /week5/input_files
 /week5/common.py
+.vscode/configurationCache.log
+.vscode/dryrun.log
+*.exe
+week6/hello.c
