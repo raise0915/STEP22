@@ -7,7 +7,6 @@
 // For the detailed explanation, please refer to simple_malloc.c.
 
 #include <assert.h>
-#include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -75,45 +74,36 @@ void my_initialize() {
 // |size| is guaranteed to be a multiple of 8 bytes and meets 8 <= |size| <=
 // 4000. You are not allowed to use any library functions other than
 // mmap_from_system() / munmap_to_system().
-
-// ここがmallocでメモリを確保する部分
-//ヒープ(動的なメモリ保存してくれる関数？)上にsize分確保される
 void *my_malloc(size_t size) {
   my_metadata_t *metadata = my_heap.free_head;
   my_metadata_t *prev = NULL;
+  my_metadata_t *best_meta = NULL;
   my_metadata_t *best_prev = NULL;
-
-  // ベストサイズを格納するbest_sizeを作成
-  size_t best_size = 65535; //size_tのmaxらしい...?
-  my_metadata_t *best_cur = NULL;
-
-  // metadataのsizeとほしいsizeの差が小さいものをbest_sizeとする。
-  //metadataの全探索して更新する
+  // First-fit: Find the first free slot the object fits.
+  // TODO: Update this logic to Best-fit!
   while (metadata) {
-    if (metadata->size > size && best_size > metadata->size){
-        //今のとその前のmetadataの更新、best_sizeの記録
+    //sizeより大きいmetadataをさがす
+    if (metadata->size >= size) { 
+        // best_metaが存在していない or 存在していてbestサイズより小さいとき更新
+      if (!best_meta || (best_meta && metadata->size < best_meta->size)) {
         best_prev = prev;
-        best_cur = metadata;
-        best_size = metadata->size;
-    }
+        best_meta = metadata; 
 
+      }
+    }
+    //printf("%zu", metadata->size);
     prev = metadata;
     metadata = metadata->next;
-  }
-
-
+    
+  }              
   // now, metadata points to the first free slot
   // and prev is the previous entry.
+  metadata = best_meta; 
+  prev = best_prev;
 
+
+  //sizeが入らない場合は新しくもらってくる -> 再帰でもう一度確保
   if (!metadata) {
-    // There was no free slot available. We need to request a new memory region
-    // from the system by calling mmap_from_system().
-    //
-    //     | metadata | free slot |
-    //     ^
-    //     metadata
-    //     <---------------------->
-    //            buffer_size
     size_t buffer_size = 4096;
     my_metadata_t *metadata = (my_metadata_t *)mmap_from_system(buffer_size);
     metadata->size = buffer_size - sizeof(my_metadata_t);
@@ -123,10 +113,6 @@ void *my_malloc(size_t size) {
     // Now, try my_malloc() again. This should succeed.
     return my_malloc(size);
   }
-
-  // prevとmetadataにそれぞれベストなものを格納する
-  prev = best_prev;
-  metadata = best_cur;
 
   // |ptr| is the beginning of the allocated object.
   //
